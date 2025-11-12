@@ -1,6 +1,6 @@
 // server/mongodb/index.js
 import mongoose from 'mongoose';
-import dotenv from '';
+import dotenv from 'dotenv';
 
 dotenv.config(); // load dotenv file
 
