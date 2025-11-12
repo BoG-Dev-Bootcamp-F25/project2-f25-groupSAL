@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
-import { connectToDatabase } from '../../../../../server/mongodb/index';
-import User from '../../../../../server/mongodb/models/User';
+import { connectToDatabase } from '../../../../server/mongodb/index';
+import User from '../../../../server/mongodb/models/User';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await connectToDatabase();

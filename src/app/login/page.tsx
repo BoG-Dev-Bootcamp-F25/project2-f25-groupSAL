@@ -10,10 +10,26 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleLogin = async () => {
-    // Call your login API here
-    // On success:
-    router.push('/dashboard');
-  };
+    try {
+        console.log('Attempting login with:', { email, password });
+        const response = await fetch('/api/user/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+
+        if (response.status === 200) {
+        router.push('/dashboard');
+        } else {
+        alert(data.message || 'Login failed');
+        }
+    } catch (err) {
+        console.error('Login error:', err);
+        alert('Something went wrong. Please try again.');
+    }
+    };
 
   return (
     <main
