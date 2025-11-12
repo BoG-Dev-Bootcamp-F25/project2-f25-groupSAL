@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { connectToDatabase } from '../../../../../server/mongodb';
 import User from '../../../../../server/mongodb/models/User';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export async function POST(req: Request) {
   await connectToDatabase();
@@ -29,7 +31,7 @@ export async function POST(req: Request) {
       { expiresIn: '7d' }
     );
 
-    return NextResponse.json({
+    const res =  NextResponse.json({
       message: 'Login successful',
       token,
       user: {
@@ -39,6 +41,21 @@ export async function POST(req: Request) {
         accountType: user.accountType,
       },
     }, { status: 200 });
+
+    // addig cookies yum
+    res.cookies.set(
+        'token', 
+        token, 
+        { 
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === 'production', 
+            maxAge: 7 * 24 * 60 * 60, 
+            path: '/'
+        }
+    );
+
+    return res;
+    
 
   } catch (err) {
     console.error('Error during login:', err);
