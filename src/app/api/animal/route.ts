@@ -1,23 +1,40 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import { connectToDatabase } from '../../../../server/mongodb';
 import User from '../../../../server/mongodb/models/User';
 import Animal from '../../../../server/mongodb/models/Animal';
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
 
 export async function POST(req: Request) {
     await connectToDatabase();
 
     try {
-        const {name, breed, owner, hoursTrained, profilePicture} = await req.json();
+        const cookieStore = await cookies();
+        const token = cookieStore.get('token')?.value;
+        if (!token) {
+            return NextResponse.json({message: "Unauthorized: No token found"}, {status: 401});
+        }
 
-        if (!name || !breed || !owner || !hoursTrained || !profilePicture) {
+        let userId: string;
+        try {
+            const decode = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string; email: string };
+            userId = decode.id
+        } catch {
+            return NextResponse.json( {message: "Unauthorized: No token found"}, {status: 401})
+        }
+
+        //no owner here, cookie has it
+        const {name, breed, hoursTrained, profilePicture} = await req.json();
+
+        if (!name || !breed || !hoursTrained || !profilePicture) {
             return NextResponse.json({ message: 'All fields are required' }, { status: 400 });
         }
 
         const newAnimal = new Animal({
             name,
             breed,
-            owner: new mongoose.Types.ObjectId(owner), // Convert to ObjectId
+            owner: new mongoose.Types.ObjectId(userId), // convert 
             hoursTrained,
             profilePicture,
         });
