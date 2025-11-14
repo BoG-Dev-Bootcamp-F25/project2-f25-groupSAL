@@ -36,7 +36,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           {/* Left: Logo + title */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <img src="/public/images/appLogo.png" alt="Logo" style={{ height: '40px', width: '40px' }} />
+            <img src="/images/appLogo.png" alt="Logo" style={{ height: '40px', width: '40px' }} />
             <h1 style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>Progress</h1>
           </div>
 
