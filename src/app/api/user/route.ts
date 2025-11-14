@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { connectToDatabase } from '../../../../server/mongodb';
 import User from '../../../../server/mongodb/models/User';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 export async function POST(req: Request) {
@@ -35,8 +38,18 @@ export async function POST(req: Request) {
 
     await newUser.save();
 
-    return NextResponse.json({
+
+    const token = jwt.sign(
+      { id: newUser._id, email: newUser.email },
+      process.env.JWT_SECRET as string,
+      { expiresIn: '7d' }
+    );
+
+    console.log('Token generated:', token);
+
+    const res = NextResponse.json({
       message: 'Account created successfully',
+      token,
       user: {
         id: newUser._id,
         userName: newUser.userName,
@@ -44,6 +57,20 @@ export async function POST(req: Request) {
         accountType: newUser.accountType,
       },
     }, { status: 201 });
+
+    const isProduction = process.env.NODE_ENV === 'production';
+    const maxAge = 7 * 24 * 60 * 60; // 7 days in seconds
+    
+    res.cookies.set('token', token, {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: 'lax',
+      maxAge: maxAge,
+      path: '/',
+    });
+
+
+    return res;
 
   } catch (err) {
     console.error('Error creating user:', err);
