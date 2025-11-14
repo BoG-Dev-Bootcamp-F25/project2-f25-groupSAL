@@ -16,9 +16,14 @@ export default function LoginPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        credentials: 'include', // Include cookies in request and response
         });
 
         const data = await response.json();
+        
+        // Check if Set-Cookie header is present
+        const setCookieHeader = response.headers.get('set-cookie');
+
 
         if (response.status === 200) {
         router.push('/dashboard');

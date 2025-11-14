@@ -1,8 +1,6 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { NextResponse } from 'next/server';
 
 interface Animal {
     _id: string;
@@ -24,12 +22,13 @@ export default function CreateAnimal() {
         profilePicture: '',
     });
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('')
     const router = useRouter();
     const handleSubmit = async (e: React.FormEvent) => { 
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await fetch('/api/animal', {
+            const res = await fetch('/api/animal', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -38,15 +37,15 @@ export default function CreateAnimal() {
                 body: JSON.stringify(formData),
             });
     
-            const data = await response.json();
+            const data = await res.json();
     
-            if (response.ok) {
+            if (res.ok) {
                 router.push('/dashboard/animals');
             } else {
-                return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+                setError(data.message || 'Response was not ok');
             }
         } catch (err) {
-            return NextResponse.json({ message: 'Cannot add animal' }, { status: 500 });
+            setError('Something went wrong in fetching api animal');
         } finally {
             setLoading(false);
         }
@@ -57,8 +56,15 @@ export default function CreateAnimal() {
             <form onSubmit={handleSubmit}>
                 <input value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})}></input>
                 <input value={formData.breed} onChange={(e) => setFormData({...formData, breed: e.target.value})}></input>
-                <input value={formData.hoursTrained} onChange={(e) => setFormData({...formData, hoursTrained: Number(e.target.value)})}></input>
+                <input 
+                    type="number" 
+                    min="0" 
+                    step="0.1"
+                    value={formData.hoursTrained} 
+                    onChange={(e) => setFormData({...formData, hoursTrained: Number(e.target.value) || 0})}
+                ></input>
                 <input value={formData.profilePicture} onChange={(e) => setFormData({...formData, profilePicture: e.target.value})}></input>
+                <button type = "submit">submit</button>
             </form>
         </div>
     )
