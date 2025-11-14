@@ -46,7 +46,7 @@ export default function SignupPage() {
         <button type="submit" style={{backgroundColor: '#da0000ff', color: 'white', fontWeight: 'bold', padding: '0.75rem', width: '425px', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '1.5rem', marginTop: '1rem', marginBottom: '1rem',}}>Sign Up</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <p>Already have an account? <a href="/login" style={{fontWeight: 'bold',}}>Log in</a></p>
-        <img src="/public/images/quarterCircle.png" alt="red quarter circle" style={{ all: 'unset', position: 'absolute', bottom: 0, left: 0 }}/>
+        <img src="/images/quarterCircle.png" alt="red quarter circle" style={{ all: 'unset', position: 'absolute', bottom: 0, left: 0 }}/>
       </form>
   );
 }

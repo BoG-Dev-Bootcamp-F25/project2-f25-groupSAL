@@ -148,7 +148,7 @@ export default function LoginPage() {
         &copy;2025 BOG Developer Bootcamp. All rights reserved.
       </footer>
       <img
-        src="/public/images/quarterCircle.png"
+        src="/images/quarterCircle.png"
         alt="red quarter circle"
         style={{ all: 'unset', position: 'absolute', bottom: 0, left: 0 }}
       />
