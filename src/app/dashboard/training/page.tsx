@@ -37,24 +37,6 @@ export default function TrainingDashboardPage() {
     return () => { mounted = false };
   }, []);
 
-  // return (
-  //   <main style={{ padding: '1rem' }}>
-  //     <h1>Training Logs</h1>
-
-  //     {loading && <p>Loading...</p>}
-  //     {error && <p style={{ color: 'red' }}>{error}</p>}
-
-  //     {!loading && !error && logs && logs.length === 0 && (
-  //       <p>No training logs found. Create one to get started.</p>
-  //     )}
-
-  //     <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-  //       {logs && logs.map((log) => (
-  //         <TrainingLogCard key={log._id || `${log.title}-${log.date}`} log={log} />
-  //       ))}
-  //     </div>
-  //   </main>
-  // );
   return (
     <main className="bg-white min-h-screen px-8 pt-6">
       {/* title & create new */}

@@ -14,5 +14,5 @@ const trainingLogSchema = new Schema({
 
 export type trainingLogType = InferSchemaType<typeof trainingLogSchema>
 
-const trainingLog = models.TrainingLog || model<trainingLogType>('trainingLog', trainingLogSchema)
-export default trainingLog;
+const TrainingLog = models.TrainingLog || model<trainingLogType>('TrainingLog', trainingLogSchema)
+export default TrainingLog;
