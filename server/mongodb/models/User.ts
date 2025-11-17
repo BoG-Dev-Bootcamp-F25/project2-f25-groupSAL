@@ -1,5 +1,5 @@
 import mongoose, { Schema, model, models, InferSchemaType } from 'mongoose';
-import bcrypt from 'bcryptjs';
+import argon2 from 'argon2';
 
 const userSchema = new Schema({
   accountType: { type: String, required: true },
@@ -11,13 +11,13 @@ const userSchema = new Schema({
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 10);
+  this.password = await argon2.hash(this.password);
   next();
 });
 
 
 userSchema.methods.comparePassword = async function (enteredPassword: string) {
-  return bcrypt.compare(enteredPassword, this.password);
+  return argon2.verify(this.password, enteredPassword);
 };
 
 export type UserType = InferSchemaType<typeof userSchema> & {
