@@ -18,22 +18,49 @@ interface Props {
 }
 
 export default function TrainingLogCard({ log }: Props) {
+  const dateObj = new Date(log.date);
+  const day = dateObj.getDate();
+  const month = dateObj.toLocaleString("en-US", { month: "short" });
+  const year = dateObj.getFullYear();
+  const hoursText = `${log.hoursLogged} ${
+    log.hoursLogged === 1 ? "hour" : "hours"
+  }`;
 
-    let dateObj = new Date(log.date);
-	return (
-		<div className="flex flex-row bg-white text-black p-4">
-        <div className="bg-[#070A52D9] text-white w-20 p-4 text-center">
-            <div className="text-2xl font-bold">{dateObj.getDate()}</div>
-            <div className="text-sm">{dateObj.getMonth() + 1} - {dateObj.getFullYear()}</div>
+  return (
+    <div className="container mx-auto p-4">
+      <div className="bg-white rounded-2xl shadow-md overflow-hidden flex items-stretch">
+
+        {/* date */}
+        <div className="bg-indigo-800 text-white text-center py-4 px-6 rounded-l-2xl flex flex-col justify-center">
+          <div className="text-5xl font-bold leading-none">{day}</div>
+          <div className="text-lg mt-2">{month} - {year}</div>
         </div>
-        <div className="ml-4">
-            <div className="text-lg font-bold">{log.title}<span className="font-normal"> • {log.hoursLogged}</span></div>
-            <div className="text-sm">{log.ownerName} - {log.breed} - {log.animalName}</div>
-            <div className="text-sm mt-2">{log.description}</div>
+
+        {/* content */}
+        <div className="py-4 px-6 flex-grow">
+          <div className="flex items-center gap-2">
+            <h2 className="text-2xl font-semibold text-gray-800">{log.title}</h2>
+            <span className="text-gray-500">•</span>
+            <span className="text-sm text-gray-500">{hoursText}</span>
+          </div>
+
+          <div className="text-gray-500 mt-1">
+            {log.ownerName} - {log.breed} - {log.animalName}
+          </div>
+
+          <div className="text-gray-700 mt-2">{log.description}</div>
         </div>
-        <div className="w-12 h-12 bg-red-600 flex justify-center items-center text-white text-2xl cursor-pointer">
-            ✏️
+
+        {/* edit */}
+        <div className="flex items-center justify-center pr-6">
+            <img
+              src="/images/trainingLogCardEditButton.png"
+              alt="Edit Button"
+              className="w-12 h-12"
+            />
         </div>
-        </div>
-	);
+
+      </div>
+    </div>
+  );
 }
