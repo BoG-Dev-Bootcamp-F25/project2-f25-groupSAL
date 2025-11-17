@@ -48,7 +48,7 @@ export default function TrainingDashboardPage() {
           className="flex items-center text-gray-500 font-medium text-md hover:text-gray-700 space-x-2"
         >
           <img src="/images/createNewLogo.png" alt="Plus" className="w-5 h-5" />
-          <span>Create new</span>
+          <span className="text-1xl text-gray-700">Create new</span>
         </Link>
       </div>
 
