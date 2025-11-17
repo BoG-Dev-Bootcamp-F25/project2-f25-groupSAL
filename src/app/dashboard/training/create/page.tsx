@@ -83,7 +83,7 @@ export default function CreateTrainingLogPage() {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+            className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 text-black"
           />
         </div>
 
@@ -93,7 +93,7 @@ export default function CreateTrainingLogPage() {
           <select
             value={animalId}
             onChange={(e) => setAnimalId(e.target.value)}
-            className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+            className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 text-black"
           >
             <option value="">Select an animal</option>
             {animals.map((a) => (
@@ -113,7 +113,7 @@ export default function CreateTrainingLogPage() {
             onChange={(e) => setHours(e.target.value)}
             min="0"
             step="0.1"
-            className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+            className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 text-black"
           />
         </div>
 
@@ -123,7 +123,7 @@ export default function CreateTrainingLogPage() {
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+            className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 text-black"
           />
         </div>
 
