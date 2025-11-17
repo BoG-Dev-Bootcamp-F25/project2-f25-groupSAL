@@ -1,11 +1,50 @@
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '../../../../server/mongodb';
 import User from '../../../../server/mongodb/models/User';
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { cookies } from 'next/headers';
 import dotenv from 'dotenv';
 dotenv.config();
 
+export async function GET(req: Request) {
+  await connectToDatabase();
+
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token')?.value;
+    
+    if (!token) {
+      return NextResponse.json({ message: 'Unauthorized: No token found' }, { status: 401 });
+    }
+
+    let userId: string;
+    try {
+      const decode = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string; email: string };
+      userId = decode.id;
+    } catch {
+      return NextResponse.json({ message: 'Unauthorized: Invalid token' }, { status: 401 });
+    }
+
+    const user = await User.findById(userId).select('-password');
+    
+    if (!user) {
+      return NextResponse.json({ message: 'User not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({
+      user: {
+        id: user._id,
+        userName: user.userName,
+        email: user.email,
+        accountType: user.accountType,
+      },
+    }, { status: 200 });
+
+  } catch (err) {
+    console.error('Error fetching user:', err);
+    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+  }
+}
 
 export async function POST(req: Request) {
   await connectToDatabase();
@@ -26,13 +65,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'User already exists' }, { status: 400 });
     }
 
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
+    // Don't hash password here - the User model's pre('save') hook will handle it
     const newUser = new User({
       userName,
       email,
-      password: hashedPassword,
+      password: password, // Will be hashed by pre('save') hook
       accountType: isAdmin ? 'admin' : 'user',
     });
 

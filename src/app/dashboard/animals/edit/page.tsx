@@ -88,31 +88,97 @@ export default function EditAnimal() {
             if (res.ok) {
                 router.push('/dashboard/animals');
             } else {
-                setError(data.message || 'Failed to load animal');
+                setError(data.message || 'Failed to update animal');
             }
         } catch (err) {
-            setError('Something went wrong in fetching api animal');
+            setError('Something went wrong updating animal');
         } finally {
             setLoading(false);
         }
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})}></input>
-                <input value={formData.breed} onChange={(e) => setFormData({...formData, breed: e.target.value})}></input>
-                <input 
-                    type="number" 
-                    min="0" 
-                    step="0.1"
-                    value={formData.hoursTrained} 
-                    onChange={(e) => setFormData({...formData, hoursTrained: Number(e.target.value) || 0})}
-                ></input>
-                <input value={formData.profilePicture} onChange={(e) => setFormData({...formData, profilePicture: e.target.value})}></input>
-                <button type = "submit">submit</button>
+        <main className="bg-white min-h-screen px-8 pt-6">
+            {/* title */}
+            <div className="flex items-center justify-between">
+                <h1 className="text-1xl font-bold text-gray-700">Animals</h1>
+            </div>
+
+            {/* horizontal line */}
+            <hr className="mt-4 mb-8 border-gray-300" />
+
+            {loading && <p className="mb-4">Loading...</p>}
+            {error && <p className="text-red-600 mb-4">{error}</p>}
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md">
+                {/* Name */}
+                <div className="flex flex-col">
+                    <label className="mb-1 font-medium text-gray-600">Name</label>
+                    <input
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 text-black"
+                        required
+                    />
+                </div>
+
+                {/* Breed */}
+                <div className="flex flex-col">
+                    <label className="mb-1 font-medium text-gray-600">Breed</label>
+                    <input
+                        type="text"
+                        value={formData.breed}
+                        onChange={(e) => setFormData({...formData, breed: e.target.value})}
+                        className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 text-black"
+                        required
+                    />
+                </div>
+
+                {/* Hours Trained */}
+                <div className="flex flex-col">
+                    <label className="mb-1 font-medium text-gray-600">Hours Trained</label>
+                    <input
+                        type="number"
+                        step="1"
+                        value={formData.hoursTrained}
+                        onChange={(e) => setFormData({...formData, hoursTrained: Number(e.target.value) || 0})}
+                        className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 text-black"
+                        required
+                    />
+                </div>
+
+                {/* Profile Picture */}
+                <div className="flex flex-col">
+                    <label className="mb-1 font-medium text-gray-600">Profile Picture URL</label>
+                    <input
+                        type="text"
+                        value={formData.profilePicture}
+                        onChange={(e) => setFormData({...formData, profilePicture: e.target.value})}
+                        className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 text-black"
+                        required
+                    />
+                </div>
+
+                {/* Buttons */}
+                <div className="flex gap-4 mt-4">
+                    <button
+                        type="button"
+                        onClick={() => router.push('/dashboard/animals')}
+                        className="px-4 py-2 border rounded text-gray-600 hover:bg-gray-100"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
+                    >
+                        {loading ? 'Saving...' : 'Save'}
+                    </button>
+                </div>
             </form>
-        </div>
+        </main>
     )
 }
 
