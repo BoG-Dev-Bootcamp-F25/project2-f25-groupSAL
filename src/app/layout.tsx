@@ -69,31 +69,44 @@ export default function RootLayout({ children }: RootLayoutProps) {
   //     </body>
   //   </html>
   // );
-    return (
-    <html lang="en">
-      <body className="m-0 font-sans">
-        {/* Header */}
-        <header className="flex items-center justify-between px-8 py-2 bg-white border-b border-gray-300">
-          
-          {/* Left: Logo + Title */}
-          <div className="flex items-center gap-2">
-            <img
-              src="/images/appLogo.png"
-              alt="Logo"
-              className="h-10 w-auto object-contain"
+  return (
+  <html lang="en">
+    <body className="m-0 font-sans">
+      {/* Header / Title Bar */}
+      <header className="flex items-center justify-between px-8 py-2 bg-white border-b border-gray-300">
+        {/* Left: Logo + title */}
+        <div className="flex items-center gap-2">
+          <img
+            src="/images/appLogo.png"
+            alt="Logo"
+            className="h-10 w-auto object-contain"
+          />
+          <h1 className="text-black font-bold text-3xl">Progress</h1>
+        </div>
+
+        {/* Center: Search bar (only if logged in) */}
+        {isLoggedIn && (
+          <form
+            onSubmit={handleSearch}
+            className="flex-grow max-w-md mx-auto"
+          >
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-blue-300"
             />
-            <h1 className="text-black font-bold text-3xl">Progress</h1>
-          </div>
+          </form>
+        )}
 
-          {/* Center: Search bar (only shows if logged in) */}
-          <SearchBar />
+        {/* Right: empty placeholder */}
+        <div className="w-10" />
+      </header>
 
-          {/* Right: space */}
-          <div className="w-10" />
-        </header>
-
-        <main>{children}</main>
-      </body>
-    </html>
+      {/* Page content */}
+      <main>{children}</main>
+    </body>
+  </html>
   );
 }
