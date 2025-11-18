@@ -53,7 +53,7 @@ export default function TrainingDashboardPage() {
       </div>
 
       {/* horizontal line */}
-      <hr className="mt-4 mb-8 border-gray-300" />
+      <hr className="mt-4 mb-6 border-gray-300" />
 
       {/* status/errors */}
       {loading && <p>Loading...</p>}
@@ -64,7 +64,7 @@ export default function TrainingDashboardPage() {
       )}
 
       {/* traininglog cards */}
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
         {logs &&
           logs.map((log) => (
             <TrainingLogCard
