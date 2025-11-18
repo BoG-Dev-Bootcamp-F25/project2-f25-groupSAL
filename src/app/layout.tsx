@@ -84,17 +84,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
         </div>
 
         {/* Center: Search bar (only if logged in) */}
-        {isLoggedIn && (
+        {true && (
           <form
             onSubmit={handleSearch}
-            className="flex-grow max-w-md mx-auto"
+            className="flex-grow max-w-3xl mx-auto"
           >
             <input
               type="text"
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-blue-300"
+              className="w-full px-4 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-blue-300"
             />
           </form>
         )}
