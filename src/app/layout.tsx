@@ -2,6 +2,7 @@
 
 import { ReactNode, useState, useEffect } from 'react';
 import './globals.css'
+import SearchBar from "./searchbar";
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -68,44 +69,31 @@ export default function RootLayout({ children }: RootLayoutProps) {
   //     </body>
   //   </html>
   // );
-  return (
-  <html lang="en">
-    <body className="m-0 font-sans">
-      {/* Header / Title Bar */}
-      <header className="flex items-center justify-between px-8 py-2 bg-white border-b border-gray-300">
-        {/* Left: Logo + title */}
-        <div className="flex items-center gap-2">
-          <img
-            src="/images/appLogo.png"
-            alt="Logo"
-            className="h-10 w-auto object-contain"
-          />
-          <h1 className="text-black font-bold text-3xl">Progress</h1>
-        </div>
-
-        {/* Center: Search bar (only if logged in) */}
-        {true && (
-          <form
-            onSubmit={handleSearch}
-            className="flex-grow max-w-3xl mx-auto"
-          >
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-blue-300"
+    return (
+    <html lang="en">
+      <body className="m-0 font-sans">
+        {/* Header */}
+        <header className="flex items-center justify-between px-8 py-2 bg-white border-b border-gray-300">
+          
+          {/* Left: Logo + Title */}
+          <div className="flex items-center gap-2">
+            <img
+              src="/images/appLogo.png"
+              alt="Logo"
+              className="h-10 w-auto object-contain"
             />
-          </form>
-        )}
+            <h1 className="text-black font-bold text-3xl">Progress</h1>
+          </div>
 
-        {/* Right: empty placeholder */}
-        <div className="w-10" />
-      </header>
+          {/* Center: Search bar (only shows if logged in) */}
+          <SearchBar />
 
-      {/* Page content */}
-      <main>{children}</main>
-    </body>
-  </html>
+          {/* Right: space */}
+          <div className="w-10" />
+        </header>
+
+        <main>{children}</main>
+      </body>
+    </html>
   );
 }
