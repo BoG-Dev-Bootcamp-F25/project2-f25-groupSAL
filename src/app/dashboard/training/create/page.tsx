@@ -39,7 +39,8 @@ export default function CreateTrainingLogPage() {
     fetchAnimals();
   }, []);
 
-  const handleSave = async () => {
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
     setError('');
 
@@ -76,7 +77,7 @@ export default function CreateTrainingLogPage() {
 
       {error && <p className="text-red-600 mb-4">{error}</p>}
 
-      <div className="flex flex-col gap-4 max-w-md">
+      <form onSubmit={handleSave} className="flex flex-col gap-4 max-w-md">
         {/* Title */}
         <div className="flex flex-col">
           <label className="mb-1 font-medium text-gray-600">Title</label>
@@ -85,6 +86,7 @@ export default function CreateTrainingLogPage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 text-black"
+            required
           />
         </div>
 
@@ -95,6 +97,7 @@ export default function CreateTrainingLogPage() {
             value={animalId}
             onChange={(e) => setAnimalId(e.target.value)}
             className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 text-black"
+            required
           >
             <option value="">Select an animal</option>
             {animals.map((a) => (
@@ -115,6 +118,7 @@ export default function CreateTrainingLogPage() {
             min="0"
             step="0.1"
             className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 text-black"
+            required
           />
         </div>
 
@@ -125,6 +129,7 @@ export default function CreateTrainingLogPage() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 text-black"
+            required
           />
         </div>
 
@@ -137,14 +142,14 @@ export default function CreateTrainingLogPage() {
             Cancel
           </Link>
           <button
-            onClick={handleSave}
+            type="submit"
             disabled={loading}
             className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
           >
             {loading ? 'Saving...' : 'Save'}
           </button>
         </div>
-      </div>
+      </form>
     </main>
   );
 }
