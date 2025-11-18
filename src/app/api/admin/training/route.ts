@@ -41,6 +41,11 @@ export async function GET(req: Request) {
                 date: log.date,
                 hoursLogged: log.hoursLogged,
                 description: log.description,
+                // normalize to the same shape as the non-admin endpoint / TrainingLog model
+                ownerName: (log as any).owner?.userName || (log as any).ownerName || '',
+                animalName: (log as any).animal?.name || (log as any).animalName || '',
+                breed: (log as any).animal?.breed || (log as any).breed || '',
+                // include originals if needed
                 owner: log.owner,
                 animal: log.animal,
             }))

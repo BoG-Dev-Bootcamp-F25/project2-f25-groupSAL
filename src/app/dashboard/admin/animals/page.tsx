@@ -24,7 +24,7 @@ export default function AnimalDashboard() {
     const fetchAnimals = async () => {
         try {
             setLoading(true);
-            const res = await fetch('/api/admin/animal', {
+            const res = await fetch('/api/admin/animals', {
                 method: 'GET',
                 credentials: 'include',
             });
