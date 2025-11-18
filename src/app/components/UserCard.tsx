@@ -15,7 +15,8 @@ interface Props {
 export default function UserCard({ user }: Props) {
     const router = useRouter();
     const userInitial = user.userName?.charAt(0).toUpperCase() || '?';
-    
+    const acctType = user.accountType === 'admin' ? 'Admin' : 'User';
+
     const handleClick = () => {
         router.push(`/dashboard/animals/edit?id=${user._id}`);
     };
@@ -30,7 +31,7 @@ export default function UserCard({ user }: Props) {
       {/* User info */}
       <div className="flex flex-col">
         <span className="font-bold text-gray-800">{user.userName}</span>
-        <span className="text-gray-500 text-sm">{user.accountType}</span>
+        <span className="text-gray-500 text-sm">{acctType}</span>
       </div>
     </div>
   );
