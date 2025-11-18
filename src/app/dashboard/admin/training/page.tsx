@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import TrainingLogCard, { TrainingLog } from "../../components/TrainingLogCard";
+import TrainingLogCard, { TrainingLog } from "../../../components/TrainingLogCard";
 import Link from "next/link";
 
 export default function TrainingDashboardPage() {
@@ -16,7 +16,7 @@ export default function TrainingDashboardPage() {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch('/api/training', { method: 'GET', credentials: 'include' });
+        const res = await fetch('/api/admin/training', { method: 'GET', credentials: 'include' });
         
         if (!res.ok) {
           const body = await res.json().catch(() => ({}));
@@ -41,15 +41,7 @@ export default function TrainingDashboardPage() {
     <main className="bg-white min-h-screen px-8 pt-6">
       {/* title & create new */}
       <div className="flex items-center justify-between">
-        <h1 className="text-1xl font-bold text-gray-700">Training Logs</h1>
-
-        <Link
-          href="/dashboard/training/create"
-          className="flex items-center text-gray-500 font-medium text-md hover:text-gray-700 space-x-2"
-        >
-          <img src="/images/createNewLogo.png" alt="Plus" className="w-5 h-5" />
-          <span className="text-1xl text-gray-700">Create new</span>
-        </Link>
+        <h1 className="text-1xl font-bold text-gray-700">All Training Logs</h1>
       </div>
 
       {/* horizontal line */}
@@ -60,7 +52,7 @@ export default function TrainingDashboardPage() {
       {error && <p className="text-red-600">{error}</p>}
 
       {!loading && !error && logs && logs.length === 0 && (
-        <p>No training logs found. Create one to get started.</p>
+        <p>No training logs found.</p>
       )}
 
       {/* traininglog cards */}

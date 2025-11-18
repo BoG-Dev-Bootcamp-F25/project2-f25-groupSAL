@@ -2,6 +2,7 @@
 
 import { ReactNode, useState, useEffect } from 'react';
 import './globals.css'
+import SearchBar from "./searchbar";
 
 interface RootLayoutProps {
   children: ReactNode;

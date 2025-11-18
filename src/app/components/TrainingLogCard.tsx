@@ -15,9 +15,10 @@ export type TrainingLog = {
 
 interface Props {
 	log: TrainingLog;
+  showEdit?: boolean;
 }
 
-export default function TrainingLogCard({ log }: Props) {
+export default function TrainingLogCard({ log, showEdit = false }: Props) {
   const dateObj = new Date(log.date);
   const day = dateObj.getDate();
   const month = dateObj.toLocaleString("en-US", { month: "short" });
@@ -51,14 +52,16 @@ export default function TrainingLogCard({ log }: Props) {
           <div className="text-gray-700 mt-2">{log.description}</div>
         </div>
 
-        {/* edit */}
-        <div className="flex items-center justify-center pr-6">
+        {/* edit button */}
+        {showEdit && (
+          <div className="flex items-center justify-center pr-6">
             <img
               src="/images/trainingLogCardEditButton.png"
               alt="Edit Button"
               className="w-12 h-12"
             />
-        </div>
+          </div>
+        )}
 
       </div>
     </div>
