@@ -18,12 +18,12 @@ export async function GET(req: Request) {
 
         let decoded: any;
         try {
-            decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string; role: string };
+            decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string, email: string, accountType: string };
         } catch {
             return NextResponse.json({ message: 'Unauthorized: Invalid token' }, { status: 401 });
         }
 
-        if (decoded.role !== 'admin') {
+        if (decoded.accountType !== 'admin') {
             return NextResponse.json({ message: 'Forbidden: Admins only' }, { status: 403 });
         }
 

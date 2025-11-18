@@ -51,7 +51,7 @@ export default function AnimalDashboard() {
     return (
         <main className="bg-white min-h-screen px-8 pt-6">
           <div className="flex items-center justify-between">
-            <h1 className="text-1xl font-bold text-gray-700">Animals</h1>
+            <h1 className="text-1xl font-bold text-gray-700">All Animals</h1>
     
           </div>
     

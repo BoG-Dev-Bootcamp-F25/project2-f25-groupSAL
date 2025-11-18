@@ -41,7 +41,7 @@ export default function TrainingDashboardPage() {
     <main className="bg-white min-h-screen px-8 pt-6">
       {/* title & create new */}
       <div className="flex items-center justify-between">
-        <h1 className="text-1xl font-bold text-gray-700">Training Logs</h1>
+        <h1 className="text-1xl font-bold text-gray-700">All Training Logs</h1>
       </div>
 
       {/* horizontal line */}
@@ -62,6 +62,7 @@ export default function TrainingDashboardPage() {
             <TrainingLogCard
               key={log._id || `${log.title}-${log.date}`}
               log={log}
+              showEdit={true}
             />
           ))}
       </div>

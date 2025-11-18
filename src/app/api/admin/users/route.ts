@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { connectToDatabase } from '../../../../../server/mongodb';
-import TrainingLog from '../../../../../server/mongodb/models/TrainingLog';
+import User from '../../../../../server/mongodb/models/User';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
@@ -27,24 +27,12 @@ export async function GET(req: Request) {
             return NextResponse.json({ message: 'Forbidden: Admins only' }, { status: 403 });
         }
 
-        // Fetch all training logs
-        const logs = await TrainingLog.find()
-            .sort({ date: -1 })
-            .populate('owner', 'userName email')  // include owner info
-            .populate('animal', 'name breed')    // include animal info
-            .exec();
+        // Fetch da users
+        const users = await User.find()
+            .select('userName accountType email')
+            .lean();
 
-        return NextResponse.json({
-            trainingLogs: logs.map(log => ({
-                _id: log._id,
-                title: log.title,
-                date: log.date,
-                hoursLogged: log.hoursLogged,
-                description: log.description,
-                owner: log.owner,
-                animal: log.animal,
-            }))
-        }, { status: 200 });
+        return NextResponse.json({ users }, { status: 200 });
 
     } catch (err) {
         console.error('Error fetching training logs:', err);
