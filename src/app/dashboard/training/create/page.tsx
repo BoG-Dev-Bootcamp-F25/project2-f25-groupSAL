@@ -7,6 +7,7 @@ import Link from 'next/link';
 interface Animal {
   _id: string;
   name: string;
+  breed: string;
 }
 
 export default function CreateTrainingLogPage() {
@@ -98,7 +99,7 @@ export default function CreateTrainingLogPage() {
             <option value="">Select an animal</option>
             {animals.map((a) => (
               <option key={a._id} value={a._id}>
-                {a.name}
+                {a.name} - {a.breed}
               </option>
             ))}
           </select>
