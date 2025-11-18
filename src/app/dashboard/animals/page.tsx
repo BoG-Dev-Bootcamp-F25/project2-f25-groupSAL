@@ -72,7 +72,7 @@ export default function AnimalDashboard() {
             <p>No animals. Create one to get started.</p>
           )}
     
-        <div className="flex gap-6 overflow-x-auto pb-4">
+        <div className="flex flex-wrap gap-6 pb-4">
             {animals.map((animal) => (
                 <AnimalCard key={animal._id} animal={animal} />
             ))}
