@@ -21,7 +21,7 @@ export default function UserCard({ user }: Props) {
     };
     
     return (
-    <div className="flex items-center bg-white shadow-md rounded-xl p-4 gap-4">
+    <div className="flex items-center bg-white shadow-md rounded-xl p-4 gap-4 mb-2">
       {/* Initials circle */}
       <div className="flex items-center justify-center w-12 h-12 bg-red-500 text-white font-bold rounded-full text-lg">
         {userInitial}
