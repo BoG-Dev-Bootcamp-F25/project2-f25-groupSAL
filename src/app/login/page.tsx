@@ -155,7 +155,7 @@ export default function LoginPage() {
   //   </main>
   // );
     return (
-    <main className="flex flex-col justify-between min-h-screen bg-white px-4 overflow-hidden">
+    <main className="flex flex-col justify-between h-[calc(100vh-3.6rem)] bg-white px-4 overflow-hidden">
       {/* Centered login form */}
       <div className="flex flex-col items-center justify-center flex-1">
         <h1 className="text-4xl font-bold text-black mb-2">Login</h1>

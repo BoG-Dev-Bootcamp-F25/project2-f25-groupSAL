@@ -51,7 +51,7 @@ export default function SignupPage() {
   //     </form>
   // );
     return (
-    <main className="relative flex flex-col items-center justify-center min-h-screen bg-white px-4 overflow-hidden">
+    <main className="relative flex flex-col items-center justify-center h-[calc(100vh-3.6rem)] bg-white px-4 overflow-hidden">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center gap-2 w-full max-w-md"
@@ -88,14 +88,14 @@ export default function SignupPage() {
           className="w-full px-4 py-3 text-lg border-b-2 border-red-700 focus:outline-none placeholder-gray-400 text-black"
         />
 
-        <label className="flex items-center gap-2 text-gray-700">
+        <label className="flex items-center gap-2 text-gray-400 mt-2">
           <input
             type="checkbox"
             checked={form.isAdmin}
             onChange={(e) => setForm({ ...form, isAdmin: e.target.checked })}
-            className="w-4 h-4"
+            className="w-4 h-4 accent-red-700"
           />
-          Admin
+          Admin access
         </label>
 
         <button
