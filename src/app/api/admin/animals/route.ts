@@ -26,9 +26,10 @@ export async function GET(req: Request) {
             return NextResponse.json({ message: 'Forbidden: Admins only' }, { status: 403 });
         }
 
-        // Fetch all animals and include owner's userName
+        // Fetch all animals and include owner's userName, most-recent first
         const animals = await Animal.find()
             .populate('owner', 'userName')
+            .sort({ _id: -1 })
             .exec();
 
         return NextResponse.json({ animals }, { status: 200 });

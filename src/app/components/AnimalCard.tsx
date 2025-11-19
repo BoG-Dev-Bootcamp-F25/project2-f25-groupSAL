@@ -17,7 +17,12 @@ interface Props {
     animal: Animal;
 }
 
-export default function AnimalCard({ animal }: Props) {
+interface PropsWithClickable {
+    animal: Animal;
+    isClickable?: boolean;
+}
+
+export default function AnimalCard({ animal, isClickable = true }: PropsWithClickable) {
     const router = useRouter();
     const hoursText = `${animal.hoursTrained} ${
         animal.hoursTrained === 1 ? "hour" : "hours"
@@ -28,13 +33,14 @@ export default function AnimalCard({ animal }: Props) {
     const ownerName = animal.owner?.userName || 'Unknown';
     
     const handleClick = () => {
+        if (!isClickable) return;
         router.push(`/dashboard/animals/edit?id=${animal._id}`);
     };
     
     return (
         <div 
-            onClick={handleClick}
-            className="bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 w-80 flex-shrink-0"
+            onClick={isClickable ? handleClick : undefined}
+            className={`bg-white rounded-2xl shadow-md overflow-hidden transition-shadow duration-200 w-80 flex-shrink-0 ${isClickable ? 'cursor-pointer hover:shadow-lg' : ''}`}
         >
             <div className="w-full h-64 bg-gray-100 overflow-hidden">
                 {animal.profilePicture ? (
