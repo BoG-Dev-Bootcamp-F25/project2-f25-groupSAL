@@ -27,9 +27,10 @@ export async function GET(req: Request) {
             return NextResponse.json({ message: 'Forbidden: Admins only' }, { status: 403 });
         }
 
-        // Fetch da users
+        // Fetch users, newest first (sort by _id desc)
         const users = await User.find()
             .select('userName accountType email')
+            .sort({ _id: -1 })
             .lean();
 
         return NextResponse.json({ users }, { status: 200 });
