@@ -15,10 +15,10 @@ export type Animal = {
 
 interface Props {
     animal: Animal;
-    clickable?: boolean;
+    isClickable?: boolean;
 }
 
-export default function AnimalCard({ animal, clickable = true}: Props) {
+export default function AnimalCard({ animal, isClickable = true }: Props) {
     const router = useRouter();
     const hoursText = `${animal.hoursTrained} ${
         animal.hoursTrained === 1 ? "hour" : "hours"
@@ -29,15 +29,14 @@ export default function AnimalCard({ animal, clickable = true}: Props) {
     const ownerName = animal.owner?.userName || 'Unknown';
     
     const handleClick = () => {
-        if (clickable) {
-            router.push(`/dashboard/animals/edit?id=${animal._id}`);
-        }
+        if (!isClickable) return;
+        router.push(`/dashboard/animals/edit?id=${animal._id}`);
     };
     
     return (
         <div 
-            onClick={clickable ? handleClick : undefined}
-            className="bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 w-80 flex-shrink-0"
+            onClick={isClickable ? handleClick : undefined}
+            className={`bg-white rounded-2xl shadow-md overflow-hidden transition-shadow duration-200 w-80 shrink-0 ${isClickable ? 'cursor-pointer hover:shadow-lg' : ''}`}
         >
             <div className="w-full h-64 bg-gray-100 overflow-hidden">
                 {animal.profilePicture ? (
@@ -55,11 +54,11 @@ export default function AnimalCard({ animal, clickable = true}: Props) {
     
             <div className="px-4 py-4 bg-white h-24 flex items-center">
                 <div className="flex items-center gap-3 w-full">
-                    <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center shrink-0">
                         <span className="text-white font-semibold text-lg">{ownerInitial}</span>
                     </div>
                     
-                    <div className="flex-grow min-w-0">
+                    <div className="grow min-w-0">
                         <h2 className="text-xl font-bold text-black truncate">
                             {animal.name} - {animal.breed}
                         </h2>

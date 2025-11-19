@@ -55,15 +55,15 @@ export default function TrainingDashboardPage() {
         <p>No training logs found.</p>
       )}
 
-      {/* traininglog cards */}
+      {/* traininglog cards (not editable from admin page) */}
       <div className="flex flex-col gap-2">
         {logs &&
           logs.map((log) => (
-            <TrainingLogCard
-              key={log._id || `${log.title}-${log.date}`}
-              log={log}
-              showEdit={false}
-            />
+              <TrainingLogCard
+                key={log._id || `${log.title}-${log.date}`}
+                log={log}
+                showEdit={false}
+              />
           ))}
       </div>
     </main>

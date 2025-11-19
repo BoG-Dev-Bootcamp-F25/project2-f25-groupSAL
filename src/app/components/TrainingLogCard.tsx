@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from 'next/navigation';
 
 export type TrainingLog = {
 	_id: string;
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export default function TrainingLogCard({ log, showEdit = false }: Props) {
+  const router = useRouter();
   const dateObj = new Date(log.date);
   const day = dateObj.getDate();
   const month = dateObj.toLocaleString("en-US", { month: "short" });
@@ -55,11 +57,18 @@ export default function TrainingLogCard({ log, showEdit = false }: Props) {
         {/* edit button */}
         {showEdit && (
           <div className="flex items-center justify-center pr-6">
-            <img
-              src="/images/trainingLogCardEditButton.png"
-              alt="Edit Button"
-              className="w-12 h-12"
-            />
+            <button
+              onClick={() => router.push(`/dashboard/training/edit?id=${log._id}`)}
+              aria-label="Edit training log"
+              className="w-12 h-12 p-0 bg-transparent border-0 cursor-pointer"
+              title="Edit training log"
+            >
+              <img
+                src="/images/trainingLogCardEditButton.png"
+                alt="Edit Button"
+                className="w-12 h-12"
+              />
+            </button>
           </div>
         )}
 

@@ -24,17 +24,21 @@ export default function AnimalDashboard() {
     const fetchAnimals = async () => {
         try {
             setLoading(true);
+            setError('');
             const res = await fetch('/api/admin/animals', {
                 method: 'GET',
                 credentials: 'include',
             });
-            if (res.ok) {
-                const data = await res.json();
-                setAnimals(data.animals || []);
+            if (!res.ok) {
+                const body = await res.json().catch(() => ({}));
+                throw new Error(body?.message || `Status ${res.status}`);
             }
+
+            const data = await res.json();
+            setAnimals(data.animals || []);
         } catch (err) {
-            console.log("Error getting animals");
-            setError('Cannot load animals');
+            console.log("Error getting animals", err);
+            setError((err as any)?.message || 'Cannot load animals');
         } finally {
             setLoading(false);
         }
@@ -67,7 +71,7 @@ export default function AnimalDashboard() {
     
         <div className="flex flex-wrap gap-6 pb-4">
             {animals.map((animal) => (
-                <AnimalCard key={animal._id} animal={animal} clickable={false} />
+                <AnimalCard key={animal._id} animal={animal} isClickable={false} />
             ))}
         </div>
         </main>
