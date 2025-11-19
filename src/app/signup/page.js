@@ -21,16 +21,21 @@ export default function SignupPage() {
     setError('');
     console.log('Form data:', form);
 
-    const res = await fetch('/api/user', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-      credentials: 'include', 
-    });
+    try {
+      const res = await fetch('/api/user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+        credentials: 'include', 
+      });
 
-    const data = await res.json();
-    if (res.ok) router.push('/dashboard');
-    else setError(data.message);
+      const data = await res.json();
+      if (res.ok) router.push('/dashboard');
+      else setError(data.message);
+    } catch (err) {
+      console.error('Signup error:', err);
+      setError('Sign up failed. Try again.');
+    }
   }
 
   // return (

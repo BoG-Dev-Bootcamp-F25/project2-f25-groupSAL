@@ -7,32 +7,33 @@ import Link from 'next/link';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const handleLogin = async () => {
     try {
+        setError('');
         console.log('Attempting login with:', { email, password });
         const response = await fetch('/api/user/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
-        credentials: 'include', // Include cookies in request and response
+        credentials: 'include', 
         });
 
         const data = await response.json();
         
-        // Check if Set-Cookie header is present
         const setCookieHeader = response.headers.get('set-cookie');
 
 
         if (response.status === 200) {
         router.push('/dashboard');
         } else {
-        alert(data.message || 'Login failed');
+        setError(data.message || 'Login failed');
         }
     } catch (err) {
         console.error('Login error:', err);
-        alert('Something went wrong. Please try again.');
+        setError('Login failed. Try Again.');
     }
     };
 
@@ -182,6 +183,8 @@ export default function LoginPage() {
         >
           LOGIN
         </button>
+
+        {error && <p className="text-red-600 mb-4">{error}</p>}
 
         <Link href="/signup" className="text-black underline mb-12">
           Don't have an account? Sign up
