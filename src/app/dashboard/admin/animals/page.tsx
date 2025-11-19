@@ -67,7 +67,7 @@ export default function AnimalDashboard() {
     
         <div className="flex flex-wrap gap-6 pb-4">
             {animals.map((animal) => (
-                <AnimalCard key={animal._id} animal={animal} />
+                <AnimalCard key={animal._id} animal={animal} clickable={false} />
             ))}
         </div>
         </main>

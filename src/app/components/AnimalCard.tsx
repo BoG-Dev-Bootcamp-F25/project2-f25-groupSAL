@@ -15,9 +15,10 @@ export type Animal = {
 
 interface Props {
     animal: Animal;
+    clickable?: boolean;
 }
 
-export default function AnimalCard({ animal }: Props) {
+export default function AnimalCard({ animal, clickable = true}: Props) {
     const router = useRouter();
     const hoursText = `${animal.hoursTrained} ${
         animal.hoursTrained === 1 ? "hour" : "hours"
@@ -28,12 +29,14 @@ export default function AnimalCard({ animal }: Props) {
     const ownerName = animal.owner?.userName || 'Unknown';
     
     const handleClick = () => {
-        router.push(`/dashboard/animals/edit?id=${animal._id}`);
+        if (clickable) {
+            router.push(`/dashboard/animals/edit?id=${animal._id}`);
+        }
     };
     
     return (
         <div 
-            onClick={handleClick}
+            onClick={clickable ? handleClick : undefined}
             className="bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 w-80 flex-shrink-0"
         >
             <div className="w-full h-64 bg-gray-100 overflow-hidden">

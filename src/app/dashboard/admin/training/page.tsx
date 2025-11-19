@@ -62,7 +62,7 @@ export default function TrainingDashboardPage() {
             <TrainingLogCard
               key={log._id || `${log.title}-${log.date}`}
               log={log}
-              showEdit={true}
+              showEdit={false}
             />
           ))}
       </div>
